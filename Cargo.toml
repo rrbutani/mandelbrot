@@ -1,0 +1,10 @@
+[package]
+name = "mandelbrot"
+version = "0.0.1"
+authors = ["Rahul Butani <rr.butani@gmail.com>"]
+
+[dependencies]
+
+# [[bin]]
+# name = "main"
+# doc = false
