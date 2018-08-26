@@ -1,10 +1,12 @@
 [package]
 name = "mandelbrot"
+description = "a fun introduction to Rust!"
 version = "0.0.1"
 authors = ["Rahul Butani <rr.butani@gmail.com>"]
+repository = "https://github.com/rrbutani/mandelbrot-example.git"
+license = "MIT"
+readme = "README.md"
 
 [dependencies]
 
-# [[bin]]
-# name = "main"
-# doc = false
+[dev-dependencies]
