@@ -1,5 +1,4 @@
 extern crate num_traits;
-// use std::ops::Div;
 use std::cmp::Ordering;
 use self::num_traits::{Float,Num};
 
@@ -68,7 +67,7 @@ impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Float> Mul<ComplexNumber
 
 impl<T: PartialEq<T> + Float, J: Into<T> + Float> PartialEq<ComplexNumber<J>> for ComplexNumber<T> {
     fn eq(&self, other: &ComplexNumber<J>) -> bool {
-        self.abs() == other.abs().into()
+        (self.r == other.r.into()) && (self.i == other.i.into())
     }
 }
 
@@ -78,14 +77,8 @@ impl<T: PartialOrd<T> + Float, J: Into<T> + Float> PartialOrd<ComplexNumber<J>> 
     }
 }
 
-// impl<T: Signed + Bounded> ComplexNumber<T> {
-//     pub 
-// }
-
 #[cfg(test)]
 mod tests {
-
-    // mod complex_number;
 
     use complex_number::ComplexNumber;
 
@@ -106,10 +99,63 @@ mod tests {
     #[test]
     fn complex_addition2() {
         let a = ComplexNumber::new(4.0, 5.0);
-        let _b = ComplexNumber::new(5.6, 9.0);
+        let b = ComplexNumber::new(5.5, 9.0);
 
         let c = a + 5;
-
         assert_eq!(c.r, 9.0);
+
+        let c = b + -5.0;
+        assert_eq!(c.r, 0.5);
+    }
+
+    #[test]
+    fn complex_multiplication() {
+        let a = ComplexNumber::new(1.0, 1.0);
+        let b = ComplexNumber::new(5.0, 3.0);
+
+        let c = a * b;
+        assert_eq!(c.r, 2.0);
+        assert_eq!(c.i, 8.0);
+    }
+
+    #[test]
+    fn complex_division() {
+        let a = ComplexNumber::new(2.0, 2.0);
+
+        let c = a / 2.0;
+        assert_eq!(c.r, 1.0);
+        assert_eq!(c.i, 1.0);
+    }
+
+    #[test]
+    fn complex_abs() {
+        assert_eq!(ComplexNumber::new(3.0, 4.0).abs(), 5.0);
+        assert_eq!(ComplexNumber::new(-3.0, 4.0).abs(), 5.0);
+        assert_eq!(ComplexNumber::new(3.0, -4.0).abs(), 5.0);
+        assert_eq!(ComplexNumber::new(-3.0, -4.0).abs(), 5.0);
+
+        assert_eq!(ComplexNumber::new(5.0, 0.0).abs(), 5.0);
+        assert_eq!(ComplexNumber::new(0.0, 5.0).abs(), 5.0);
+    }
+
+    #[test]
+    fn complex_eq() {
+        let a = ComplexNumber::new(2.0, 2.0);
+        let b = ComplexNumber::new(2.0, 2.0);
+        assert_eq!(a, b);
+
+        let a = ComplexNumber::new(3.0, 2.0);
+        assert_ne!(a, b);
+
+        let a = ComplexNumber::new(-2.0, 2.0);
+        assert_ne!(a, b);
+    }
+
+    #[test]
+    fn complex_cmp() {
+        let a = ComplexNumber::new(2.0, 2.0);
+
+        assert!(a > ComplexNumber::new(2.0, 0.0));
+        assert!(a == ComplexNumber::new(2.0, 2.0));
     }
 }

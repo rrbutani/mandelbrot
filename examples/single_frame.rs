@@ -11,7 +11,7 @@ mod shared;
 use shared::{cli, common};
 use std::io::BufWriter;
 
-use mandelbrot::{pixel::{Pixel, PixelMath}, complex_number};
+use mandelbrot::{pixel::{Pixel, PixelMath, IntoPixel}, complex_number};
 
 fn main() {
     let matches = cli::args().get_matches();
@@ -27,9 +27,9 @@ fn main() {
     let mut writer = encoder.write_header().unwrap();
 
     let viewport = Viewport::<f64> {
-        top_left: complex_number::ComplexNumber::new(-2.5, 2.5),
-        width: 5f64,
-        height: 5f64,
+        top_left: complex_number::ComplexNumber::new(-3.0, 1.15),
+        width: 4f64,
+        height: (h as f64 / w as f64) * 4f64,
     };
 
     let config = MandelbrotConfig::<u8> {
@@ -56,4 +56,12 @@ fn main() {
     writer.write_image_data(common::flatten_array(data).as_slice()).unwrap();
 
     println!("{:?}, {:?}", w, h);
+
+    let px = Pixel::new(9u8, 234, 5);
+
+    let iter = IntoPixel::new(&px);
+
+    for i in iter {
+        println!("{:?}", i);
+    }
 }

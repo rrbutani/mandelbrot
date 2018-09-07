@@ -79,6 +79,7 @@ pub fn get_dimensions(m: &ArgMatches) -> Option<(u32, u32)> {
     }
 }
 
+#[allow(dead_code)]
 pub fn get_number_of_frames(m: &ArgMatches) -> Option<u32> {
     if let Some(val) = m.value_of("frames") {
         match val.parse::<u32>() {
@@ -90,6 +91,7 @@ pub fn get_number_of_frames(m: &ArgMatches) -> Option<u32> {
     }
 }
 
+#[allow(dead_code)]
 pub fn get_output_file(m: &ArgMatches, def: &str) -> Result<File> {
     let path_str = m.value_of("output").unwrap_or(def);
     let path = Path::new(path_str);

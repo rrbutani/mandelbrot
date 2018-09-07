@@ -1,5 +1,6 @@
 extern crate num_traits;
 
+use std::fmt::Debug;
 use std::fmt::UpperHex;
 use pixel::{Pixel, PixelMath};
 
@@ -38,7 +39,9 @@ impl<P: Unsigned + Bounded + UpperHex + Copy + Zero> Mandelbrot<P> {
         let (w, h) = config.dimensions;
 
         let w_c = ComplexNumber::new(config.viewport.width, 0.0);
-        let h_c = ComplexNumber::new(0.0, config.viewport.height);
+        let h_c = ComplexNumber::new(0.0, -config.viewport.height);
+
+        // println!("Viewport width is {} -> {:?}; width is {}; therefore step size is {:?}", config.viewport.width, w_c, w, w_c/w);
 
         Mandelbrot {
             config: config,
@@ -59,16 +62,21 @@ impl<P: Unsigned + Bounded + UpperHex + Copy + Zero> Mandelbrot<P> {
 
         let mut coordinate = self.config.viewport.top_left;
 
+        // println!("We ready! Starting at {:?} and stepping {:?} and then {:?}", coordinate, d_w, d_h);
+
         self.iterations += num_iters;
 
         for r in 0..(h as usize) {
+            let mut coordinate2 = coordinate;
+
             for c in 0..(w as usize) {
-                self.values[r][c] = iterate_coordinate(self.values[r][c], coordinate, num_iters);
+                // println!("@ {}, {}", r, c);
+                self.values[r][c] = iterate_coordinate(self.values[r][c], coordinate2, num_iters);
 
                 let iters_to_escape = self.values[r][c].0;
                 self.pixels[r][c] = SimpleColorScale::pixel_color(iters_to_escape, self.iterations);
 
-                coordinate = coordinate + d_w;
+                coordinate2 = coordinate2 + d_w;
             }
 
             coordinate = coordinate + d_h;
@@ -77,18 +85,19 @@ impl<P: Unsigned + Bounded + UpperHex + Copy + Zero> Mandelbrot<P> {
     }
 }
 
-fn iterate_coordinate<T: Float>(current_coord: (u32, ComplexNumber<T>), c: ComplexNumber<T>, limit: u32) -> (u32, ComplexNumber<T>)
+fn iterate_coordinate<T: Float + Debug>(current_coord: (u32, ComplexNumber<T>), c: ComplexNumber<T>, limit: u32) -> (u32, ComplexNumber<T>)
     where f64: From<T> {
     let mut count = 0;
     let (finished_iters, mut z) = current_coord;
     let two = ComplexNumber::<f64>::new(2.0, 0.0);
 
+    // println!("Got {:?} and {:?} ({:?}) at {} iterations", c, z, z.abs(), finished_iters);
+
     while two > z && count < limit {
         z = z * z + c;
         count += 1;
+        // println!("    z is {:?} after {} iterations", z, count);
     }
 
     (count + finished_iters, z)
 }
-
-// ((z * z + c)^2 + c)^2 + c
