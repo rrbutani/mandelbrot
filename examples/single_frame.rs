@@ -13,6 +13,9 @@ use std::io::BufWriter;
 
 use mandelbrot::{pixel::{Pixel, PixelMath, IntoPixel}, complex_number};
 
+use mandelbrot::color_scale::SimpleColorScale;
+use mandelbrot::color_scale::ColorScale;
+
 fn main() {
     let matches = cli::args().get_matches();
 
@@ -35,7 +38,7 @@ fn main() {
     let config = MandelbrotConfig::<u8> {
         dimensions: dimensions,
         viewport: viewport,
-        _pixel: Pixel::<u8>::default(),
+        color_fn: SimpleColorScale::pixel_color,
     };
 
     let mut mandelbrot = Mandelbrot::new(config);

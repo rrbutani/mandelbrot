@@ -4,12 +4,11 @@ use std::fmt::Debug;
 use std::fmt::UpperHex;
 use pixel::{Pixel, PixelMath};
 
-use color_scale::SimpleColorScale;
-use color_scale::ColorScale;
 use self::num_traits::{Float, Bounded, Zero};
 use self::num_traits::sign::Unsigned;
 
 use std::convert::From;
+use std::cmp;
 
 use ::complex_number::ComplexNumber;
 
@@ -23,7 +22,7 @@ pub struct Viewport<T: Float>
 pub struct MandelbrotConfig<P: Unsigned + Bounded + UpperHex + Copy + Zero> {
     pub dimensions: (u32, u32),
     pub viewport: Viewport<f64>,
-    pub _pixel: Pixel<P>,
+    pub color_fn: fn(u32, u32) -> Pixel<P>,
 }
 
 pub struct Mandelbrot<P: Unsigned + Bounded + UpperHex + Copy + Zero> {
@@ -41,8 +40,6 @@ impl<P: Unsigned + Bounded + UpperHex + Copy + Zero> Mandelbrot<P> {
         let w_c = ComplexNumber::new(config.viewport.width, 0.0);
         let h_c = ComplexNumber::new(0.0, -config.viewport.height);
 
-        // println!("Viewport width is {} -> {:?}; width is {}; therefore step size is {:?}", config.viewport.width, w_c, w, w_c/w);
-
         Mandelbrot {
             config: config,
             pixels: vec![vec![Pixel::<P>::default(); w as usize]; h as usize],
@@ -59,29 +56,27 @@ impl<P: Unsigned + Bounded + UpperHex + Copy + Zero> Mandelbrot<P> {
     pub fn run_iterations(&mut self, num_iters: u32) {
         let (w, h) = self.config.dimensions;
         let (d_w, d_h) = self.steps;
-
-        let mut coordinate = self.config.viewport.top_left;
-
-        // println!("We ready! Starting at {:?} and stepping {:?} and then {:?}", coordinate, d_w, d_h);
+        let coordinate = self.config.viewport.top_left;
 
         self.iterations += num_iters;
 
+        let mut max_iterations: u32 = 0;
+
         for r in 0..(h as usize) {
-            let mut coordinate2 = coordinate;
-
             for c in 0..(w as usize) {
-                // println!("@ {}, {}", r, c);
-                self.values[r][c] = iterate_coordinate(self.values[r][c], coordinate2, num_iters);
+                self.values[r][c] = iterate_coordinate(self.values[r][c],
+                        coordinate + d_w * (c as f64) + d_h * (r as f64),
+                        num_iters);
 
-                let iters_to_escape = self.values[r][c].0;
-                self.pixels[r][c] = SimpleColorScale::pixel_color(iters_to_escape, self.iterations);
-
-                coordinate2 = coordinate2 + d_w;
+                max_iterations = cmp::max(max_iterations, self.values[r][c].0);
             }
-
-            coordinate = coordinate + d_h;
         }
 
+        for (r, row) in self.values.iter().enumerate() {
+            for (c, (iters, _)) in row.iter().enumerate() {
+                self.pixels[r][c] = (self.config.color_fn)(*iters, max_iterations);
+            }
+        }
     }
 }
 
@@ -91,12 +86,10 @@ fn iterate_coordinate<T: Float + Debug>(current_coord: (u32, ComplexNumber<T>), 
     let (finished_iters, mut z) = current_coord;
     let two = ComplexNumber::<f64>::new(2.0, 0.0);
 
-    // println!("Got {:?} and {:?} ({:?}) at {} iterations", c, z, z.abs(), finished_iters);
 
     while two > z && count < limit {
         z = z * z + c;
         count += 1;
-        // println!("    z is {:?} after {} iterations", z, count);
     }
 
     (count + finished_iters, z)

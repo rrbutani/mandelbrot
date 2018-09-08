@@ -36,6 +36,5 @@ pub fn flatten_array<T: Unsigned + Bounded + UpperHex + Zero + Copy>(grid: &Vec<
     grid.iter().flat_map(|col|
         col.iter().flat_map(|pixel|
             IntoPixel::<T>::new(pixel)))
-    // .cloned()
     .collect()
 }

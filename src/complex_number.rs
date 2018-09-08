@@ -65,6 +65,17 @@ impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Float> Mul<ComplexNumber
     }
 }
 
+impl<T: Mul<Output=T> + Float, R: Num + Into<T> + Copy> Mul<R> for ComplexNumber<T> {
+    type Output = ComplexNumber<T>;
+
+    fn mul(self, other: R) -> ComplexNumber<T> {
+        ComplexNumber {
+            r: self.r * other.into(),
+            i: self.i * other.into(),
+        }
+    }
+}
+
 impl<T: PartialEq<T> + Float, J: Into<T> + Float> PartialEq<ComplexNumber<J>> for ComplexNumber<T> {
     fn eq(&self, other: &ComplexNumber<J>) -> bool {
         (self.r == other.r.into()) && (self.i == other.i.into())
@@ -116,6 +127,16 @@ mod tests {
         let c = a * b;
         assert_eq!(c.r, 2.0);
         assert_eq!(c.i, 8.0);
+    }
+
+    #[test]
+    fn complex_multiplication2() {
+        let a = ComplexNumber::new(1.0, 3.0);
+
+        let c = a * 2;
+
+        assert_eq!(c.r, 2.0);
+        assert_eq!(c.i, 6.0);
     }
 
     #[test]
