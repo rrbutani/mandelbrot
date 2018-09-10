@@ -16,5 +16,6 @@ num-traits = "~0.2.5"
 
 [dev-dependencies]
 gif = "~0.10.0"
-png = "~0.12.0"
+# png = "~0.12.0"
+png = { git = "https://github.com/rrbutani/image-png" }
 clap = "~2.32.0"
