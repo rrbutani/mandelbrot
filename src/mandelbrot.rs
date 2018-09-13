@@ -39,7 +39,7 @@ impl<P: 'static + Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mande
         let h_c = ComplexNumber::new(0.0, -config.viewport.height);
 
         Mandelbrot {
-            config: config,
+            config,
             pixels: vec![vec![Pixel::<P>::default(); w as usize]; h as usize],
             values: vec![vec![(0, ComplexNumber::new(0.0, 0.0)); w as usize]; h as usize],
             steps: (w_c / w, h_c / h),

@@ -53,42 +53,38 @@ impl<T: 'static + Unsigned + Bounded + UpperHex + Zero + One + Copy + Into<f64>>
         T: Into<f64>,
     {
         if saturation > 1f64 || brightness > 1f64 {
-            return Err(String::from(format!(
+            return Err(format!(
                 "Invalid HSB values: {} {} {}",
                 hue, saturation, brightness
-            )));
+            ));
         }
 
         let hh: f64;
-        let p: f64;
-        let q: f64;
-        let t: f64;
+        let pp: f64;
+        let qq: f64;
+        let tt: f64;
         let ff: f64;
-        let v: f64;
-        let i: u64;
-        // let r: f64, g: f64, b: f64;
+        let vv: f64;
+        let ii: u64;
 
         let (r, g, b) = if saturation <= 0f64 {
             (brightness, brightness, brightness)
         } else {
             hh = (hue % 360f64) / 60f64;
-            // hh = if hue >= 360f64 { 0f64 } else { (hue/60f64) /*% 1f64*/ };
-            // hh = (hue - hue.floor()) * 6f64;
-            i = hh as u64;
-            // ff = hh - (i as f64);
+            ii = hh as u64;
             ff = hh - hh.floor();
-            p = brightness * (1f64 - saturation);
-            q = brightness * (1f64 - (saturation * ff));
-            t = brightness * (1f64 - (saturation * (1f64 - ff)));
-            v = brightness;
+            pp = brightness * (1f64 - saturation);
+            qq = brightness * (1f64 - (saturation * ff));
+            tt = brightness * (1f64 - (saturation * (1f64 - ff)));
+            vv = brightness;
 
-            match i {
-                0 => (v, t, p),
-                1 => (q, v, p),
-                2 => (p, v, t),
-                3 => (p, q, v),
-                4 => (t, p, v),
-                _ => (v, p, q),
+            match ii {
+                0 => (vv, tt, pp),
+                1 => (qq, vv, pp),
+                2 => (pp, vv, tt),
+                3 => (pp, qq, vv),
+                4 => (tt, pp, vv),
+                _ => (vv, pp, qq),
             }
         };
 

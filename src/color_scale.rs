@@ -120,7 +120,7 @@ impl ColorScale for DiscreteColorScale {
         _ending_point: ComplexNumber<f64>,
         max_iterations: u32,
     ) -> Pixel<T> {
-        match (iters_to_escape as f64) / (max_iterations as f64) {
+        match f64::from(iters_to_escape) / f64::from(max_iterations) {
             p if p < 0.15 => Pixel::new(T::max_value(), T::min_value(), T::min_value()),
             p if p < 0.30 => Pixel::new(T::max_value(), T::max_value(), T::min_value()),
             p if p < 0.45 => Pixel::new(T::min_value(), T::max_value(), T::min_value()),
