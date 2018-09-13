@@ -27,7 +27,7 @@ fn main() {
 
     let ref mut buf = BufWriter::new(file);
 
-    let mut encoder = png::Encoder::new_animated(buf, w, h, f).unwrap();
+    let mut encoder = png::Encoder::new_animated(buf, w, h, f+1).unwrap();
     encoder.set(png::ColorType::RGBA).set(png::BitDepth::Eight);
     let mut writer = encoder.write_header().unwrap();
 
@@ -40,7 +40,8 @@ fn main() {
     let config = MandelbrotConfig::<u8> {
         dimensions: dimensions,
         viewport: viewport,
-        color_fn: ContinuousColorScale::pixel_color,
+        color_fn: ContinuousColorScale::get_color_fn_boxed(140.0, 1.0, 1.0),
+        // color_fn: ContinuousColorScale::pixel_color,
     };
 
     let mut mandelbrot = Mandelbrot::new(config);
@@ -57,14 +58,15 @@ fn main() {
     let config = MandelbrotConfig::<u8> {
         dimensions: dimensions,
         viewport: viewport,
-        color_fn: ContinuousColorScale::pixel_color,
+        color_fn: ContinuousColorScale::get_color_fn_boxed(140.0, 1.0, 1.0),
+        // color_fn: ContinuousColorScale::pixel_color,
     };
 
     let mut mandelbrot = Mandelbrot::new(config);
 
     println!("Running {} iterations", f);
 
-    for _i in 0..f-1 {
+    for _i in 0..f {
         mandelbrot.run_iterations(1);
         let data = common::flatten_array(mandelbrot.get_pixels());
         let data = data.as_slice();

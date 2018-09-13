@@ -22,7 +22,7 @@ pub struct Viewport<T: Float>
 pub struct MandelbrotConfig<P: Unsigned + Bounded + UpperHex + Copy + Zero> {
     pub dimensions: (u32, u32),
     pub viewport: Viewport<f64>,
-    pub color_fn: fn(u32, u32) -> Pixel<P>,
+    pub color_fn: Box<Fn(u32, ComplexNumber<f64>, u32) -> Pixel<P>>,
 }
 
 pub struct Mandelbrot<P: Unsigned + Bounded + UpperHex + Copy + Zero> {
@@ -33,7 +33,7 @@ pub struct Mandelbrot<P: Unsigned + Bounded + UpperHex + Copy + Zero> {
     iterations: u32,
 }
 
-impl<P: Unsigned + Bounded + UpperHex + Copy + Zero> Mandelbrot<P> {
+impl<P: 'static +  Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mandelbrot<P> {
     pub fn new(config: MandelbrotConfig<P>) -> Mandelbrot<P> {
         let (w, h) = config.dimensions;
 
@@ -73,8 +73,8 @@ impl<P: Unsigned + Bounded + UpperHex + Copy + Zero> Mandelbrot<P> {
         }
 
         for (r, row) in self.values.iter().enumerate() {
-            for (c, (iters, _)) in row.iter().enumerate() {
-                self.pixels[r][c] = (self.config.color_fn)(*iters, max_iterations);
+            for (c, (iters, zn)) in row.iter().enumerate() {
+                self.pixels[r][c] = (self.config.color_fn)(*iters, *zn, max_iterations);
             }
         }
     }
