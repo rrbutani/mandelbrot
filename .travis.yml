@@ -4,10 +4,16 @@ rust:
   - stable
   - beta
   - nightly
+install:
+  - rustup component add rustfmt-preview clippy-preview
 matrix:
   allow_failures:
     - rust: nightly
   fast_finish: true
+  include:
+    - env: FMT=true
+      rust: beta
 script:
   - cargo build --verbose --all
   - cargo test --verbose --all
+  - [ ${FMT+x} ] && { cargo fmt && cargo clippy; } || [ ! ${FMT+x} ]

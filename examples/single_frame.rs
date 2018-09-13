@@ -1,21 +1,18 @@
 extern crate clap;
-extern crate png;
 extern crate mandelbrot;
+extern crate png;
 
-use mandelbrot::mandelbrot::MandelbrotConfig;
-use mandelbrot::mandelbrot::Mandelbrot;
-use mandelbrot::mandelbrot::Viewport;
+use mandelbrot::mandelbrot::{Mandelbrot, MandelbrotConfig, Viewport};
 use png::HasParameters;
 
 mod shared;
 use shared::{cli, common};
 use std::io::BufWriter;
 
-use mandelbrot::{pixel::{Pixel, PixelMath, IntoPixel}, complex_number};
+use mandelbrot::complex_number;
 
-use mandelbrot::color_scale::SimpleColorScale;
-use mandelbrot::color_scale::ContinuousColorScale;
-use mandelbrot::color_scale::ColorScale;
+#[allow(unused_imports)]
+use mandelbrot::color_scale::{ColorScale, ContinuousColorScale, SimpleColorScale};
 
 fn main() {
     let matches = cli::args().get_matches();
@@ -40,8 +37,8 @@ fn main() {
         dimensions: dimensions,
         viewport: viewport,
         // color_fn: ContinuousColorScale::get_color_fn(20.0, 0.8, 1.0),
-        // color_fn: ContinuousColorScale::get_color_fn_boxed(140.0, 1.0, 1.0),
-        color_fn: Box::new(SimpleColorScale::pixel_color),
+        color_fn: ContinuousColorScale::get_color_fn_boxed(200.0, 1.0, 1.0),
+        // color_fn: Box::new(SimpleColorScale::pixel_color),
     };
 
     let mut mandelbrot = Mandelbrot::new(config);
@@ -50,24 +47,7 @@ fn main() {
 
     let data = mandelbrot.get_pixels();
 
-    // let mut data = vec![vec![vec![ 0 as u8; 4]; w as usize]; h as usize];
-
-    // data[(w - w) as usize][(h - h) as usize][0] = 255;
-    // data[(w - w) as usize][(h - h) as usize][1] = 255;
-    // data[(w - w) as usize][(h - h) as usize][2] = 0;
-    // data[(w - w) as usize][(h - h) as usize][3] = 255;
-
-
-
-    writer.write_image_data(common::flatten_array(data).as_slice()).unwrap();
-
-    println!("{:?}, {:?}", w, h);
-
-    let px = Pixel::new(9u8, 234, 5);
-
-    let iter = IntoPixel::new(&px);
-
-    for i in iter {
-        println!("{:?}", i);
-    }
+    writer
+        .write_image_data(common::flatten_array(data).as_slice())
+        .unwrap();
 }

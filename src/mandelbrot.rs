@@ -1,19 +1,17 @@
 extern crate num_traits;
 
-use std::fmt::Debug;
-use std::fmt::UpperHex;
 use pixel::{Pixel, PixelMath};
+use std::fmt::{Debug, UpperHex};
 
-use self::num_traits::{Float, Bounded, Zero};
 use self::num_traits::sign::Unsigned;
+use self::num_traits::{Bounded, Float, Zero};
 
-use std::convert::From;
 use std::cmp;
+use std::convert::From;
 
-use ::complex_number::ComplexNumber;
+use complex_number::ComplexNumber;
 
-pub struct Viewport<T: Float> 
-{
+pub struct Viewport<T: Float> {
     pub top_left: ComplexNumber<T>,
     pub width: T,
     pub height: T,
@@ -33,7 +31,7 @@ pub struct Mandelbrot<P: Unsigned + Bounded + UpperHex + Copy + Zero> {
     iterations: u32,
 }
 
-impl<P: 'static +  Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mandelbrot<P> {
+impl<P: 'static + Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mandelbrot<P> {
     pub fn new(config: MandelbrotConfig<P>) -> Mandelbrot<P> {
         let (w, h) = config.dimensions;
 
@@ -64,9 +62,11 @@ impl<P: 'static +  Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mand
 
         for r in 0..(h as usize) {
             for c in 0..(w as usize) {
-                self.values[r][c] = iterate_coordinate(self.values[r][c],
-                        coordinate + d_w * (c as f64) + d_h * (r as f64),
-                        num_iters);
+                self.values[r][c] = iterate_coordinate(
+                    self.values[r][c],
+                    coordinate + d_w * (c as f64) + d_h * (r as f64),
+                    num_iters,
+                );
 
                 max_iterations = cmp::max(max_iterations, self.values[r][c].0);
             }
@@ -78,14 +78,33 @@ impl<P: 'static +  Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mand
             }
         }
     }
+
+    pub fn reset(&mut self) {
+        self.pixels
+            .iter_mut()
+            .map(|col| col.iter_mut().map(|px| *px = Pixel::<P>::default()))
+            .count();
+        self.values
+            .iter_mut()
+            .map(|row| {
+                row.iter_mut()
+                    .map(|coor| *coor = (0, ComplexNumber::new(0.0, 0.0)))
+            }).count();
+        self.iterations = 0;
+    }
 }
 
-fn iterate_coordinate<T: Float + Debug>(current_coord: (u32, ComplexNumber<T>), c: ComplexNumber<T>, limit: u32) -> (u32, ComplexNumber<T>)
-    where f64: From<T> {
+fn iterate_coordinate<T: Float + Debug>(
+    current_coord: (u32, ComplexNumber<T>),
+    c: ComplexNumber<T>,
+    limit: u32,
+) -> (u32, ComplexNumber<T>)
+where
+    f64: From<T>,
+{
     let mut count = 0;
     let (finished_iters, mut z) = current_coord;
     let two = ComplexNumber::<f64>::new(2.0, 0.0);
-
 
     while two > z && count < limit {
         z = z * z + c;

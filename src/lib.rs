@@ -1,9 +1,7 @@
-
-pub mod pixel;
-pub mod mandelbrot;
 pub mod color_scale;
 pub mod complex_number;
-
+pub mod mandelbrot;
+pub mod pixel;
 
 #[cfg(test)]
 mod tests {

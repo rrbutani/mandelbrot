@@ -3,10 +3,10 @@ extern crate gif;
 extern crate mandelbrot;
 
 use gif::SetParameter;
-use mandelbrot::mandelbrot::{Mandelbrot, MandelbrotConfig, Viewport};
-use mandelbrot::complex_number;
+// use mandelbrot::color_scale::ColorScale;
 use mandelbrot::color_scale::ContinuousColorScale;
-use mandelbrot::color_scale::ColorScale;
+use mandelbrot::complex_number;
+use mandelbrot::mandelbrot::{Mandelbrot, MandelbrotConfig, Viewport};
 
 mod shared;
 use shared::{cli, common};
@@ -51,24 +51,9 @@ fn main() {
         let frame = gif::Frame::from_rgba(w as u16, h as u16, &mut common::flatten_array(pixels));
 
         println!("Made a frame");
-    
+
         encoder.write_frame(&frame).unwrap();
-    
+
         println!("Finished writing the frame!");
     }
-
-    // mandelbrot.run_iterations(f);
-
-    // let data = mandelbrot.get_pixels();
-
-    // // let mut data = vec![vec![vec![ 0 as u8; 4]; w as usize]; h as usize];
-
-    // // data[(w - w) as usize][(h - h) as usize][0] = 255;
-    // // data[(w - w) as usize][(h - h) as usize][1] = 255;
-    // // data[(w - w) as usize][(h - h) as usize][2] = 0;
-    // // data[(w - w) as usize][(h - h) as usize][3] = 255;
-
-
-
-    // writer.write_image_data(common::flatten_array(data).as_slice()).unwrap();
 }

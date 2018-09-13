@@ -1,9 +1,9 @@
 extern crate num_traits;
+use self::num_traits::{Float, Num};
 use std::cmp::Ordering;
-use self::num_traits::{Float,Num};
 
-use std::ops::{Add, Div, Mul, Sub};
 use std::cmp::PartialOrd;
+use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(Debug, Clone, Copy)]
 pub struct ComplexNumber<T: Float> {
@@ -13,7 +13,7 @@ pub struct ComplexNumber<T: Float> {
 
 impl<T: Float> ComplexNumber<T> {
     pub fn new(r: T, i: T) -> ComplexNumber<T> {
-        ComplexNumber {r, i}
+        ComplexNumber { r, i }
     }
 
     pub fn abs(self) -> T {
@@ -21,7 +21,7 @@ impl<T: Float> ComplexNumber<T> {
     }
 }
 
-impl<T: Add<Output=T> + Float> Add<ComplexNumber<T>> for ComplexNumber<T> {
+impl<T: Add<Output = T> + Float> Add<ComplexNumber<T>> for ComplexNumber<T> {
     type Output = ComplexNumber<T>;
 
     fn add(self, other: ComplexNumber<T>) -> ComplexNumber<T> {
@@ -32,7 +32,7 @@ impl<T: Add<Output=T> + Float> Add<ComplexNumber<T>> for ComplexNumber<T> {
     }
 }
 
-impl<T: Add<Output=T> + Float, R: Num + Into<T> + Copy> Add<R> for ComplexNumber<T> {
+impl<T: Add<Output = T> + Float, R: Num + Into<T> + Copy> Add<R> for ComplexNumber<T> {
     type Output = ComplexNumber<T>;
 
     fn add(self, other: R) -> ComplexNumber<T> {
@@ -43,7 +43,7 @@ impl<T: Add<Output=T> + Float, R: Num + Into<T> + Copy> Add<R> for ComplexNumber
     }
 }
 
-impl<T: Div<Output=T> + Float, R: Num + Into<T> + Copy> Div<R> for ComplexNumber<T> {
+impl<T: Div<Output = T> + Float, R: Num + Into<T> + Copy> Div<R> for ComplexNumber<T> {
     type Output = ComplexNumber<T>;
 
     fn div(self, other: R) -> ComplexNumber<T> {
@@ -54,7 +54,9 @@ impl<T: Div<Output=T> + Float, R: Num + Into<T> + Copy> Div<R> for ComplexNumber
     }
 }
 
-impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Float> Mul<ComplexNumber<T>> for ComplexNumber<T> {
+impl<T: Mul<Output = T> + Sub<Output = T> + Add<Output = T> + Float> Mul<ComplexNumber<T>>
+    for ComplexNumber<T>
+{
     type Output = ComplexNumber<T>;
 
     fn mul(self, other: ComplexNumber<T>) -> ComplexNumber<T> {
@@ -65,7 +67,7 @@ impl<T: Mul<Output=T> + Sub<Output=T> + Add<Output=T> + Float> Mul<ComplexNumber
     }
 }
 
-impl<T: Mul<Output=T> + Float, R: Num + Into<T> + Copy> Mul<R> for ComplexNumber<T> {
+impl<T: Mul<Output = T> + Float, R: Num + Into<T> + Copy> Mul<R> for ComplexNumber<T> {
     type Output = ComplexNumber<T>;
 
     fn mul(self, other: R) -> ComplexNumber<T> {
@@ -82,7 +84,9 @@ impl<T: PartialEq<T> + Float, J: Into<T> + Float> PartialEq<ComplexNumber<J>> fo
     }
 }
 
-impl<T: PartialOrd<T> + Float, J: Into<T> + Float> PartialOrd<ComplexNumber<J>> for ComplexNumber<T> {
+impl<T: PartialOrd<T> + Float, J: Into<T> + Float> PartialOrd<ComplexNumber<J>>
+    for ComplexNumber<T>
+{
     fn partial_cmp(&self, other: &ComplexNumber<J>) -> Option<Ordering> {
         self.abs().partial_cmp(&other.abs().into())
     }
