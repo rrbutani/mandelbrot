@@ -1,3 +1,7 @@
+//! A Complex Number Type
+//! 
+//! This is only meant for use in the `mandelbrot` crate so it doesn't implement all the functionality possible for complex numbers, but it's pretty full featured.
+
 extern crate num_traits;
 use self::num_traits::{Float, Num};
 use std::cmp::Ordering;
@@ -6,16 +10,21 @@ use std::cmp::PartialOrd;
 use std::ops::{Add, Div, Mul, Sub};
 
 #[derive(Debug, Clone, Copy)]
+/// Represents a Complex Number
 pub struct ComplexNumber<T: Float> {
+    /// The real part
     r: T,
+    /// The imaginary part 
     i: T,
 }
 
 impl<T: Float> ComplexNumber<T> {
+    /// Make a shiny new ComplexNumber
     pub fn new(r: T, i: T) -> ComplexNumber<T> {
         ComplexNumber { r, i }
     }
 
+    /// Find the absolute value of the ComplexNumber
     pub fn abs(self) -> T {
         ((self.r * self.r) + (self.i * self.i)).sqrt()
     }
@@ -24,6 +33,7 @@ impl<T: Float> ComplexNumber<T> {
 impl<T: Add<Output = T> + Float> Add<ComplexNumber<T>> for ComplexNumber<T> {
     type Output = ComplexNumber<T>;
 
+    /// Adds our `ComplexNumber` to another `ComplexNumber`
     fn add(self, other: ComplexNumber<T>) -> ComplexNumber<T> {
         ComplexNumber {
             r: self.r + other.r,
@@ -35,6 +45,7 @@ impl<T: Add<Output = T> + Float> Add<ComplexNumber<T>> for ComplexNumber<T> {
 impl<T: Add<Output = T> + Float, R: Num + Into<T> + Copy> Add<R> for ComplexNumber<T> {
     type Output = ComplexNumber<T>;
 
+    /// Adds our `ComplexNumber` to something that _isn't_ a `ComplexNumber`
     fn add(self, other: R) -> ComplexNumber<T> {
         ComplexNumber {
             r: self.r + (other.into()),
@@ -46,6 +57,7 @@ impl<T: Add<Output = T> + Float, R: Num + Into<T> + Copy> Add<R> for ComplexNumb
 impl<T: Div<Output = T> + Float, R: Num + Into<T> + Copy> Div<R> for ComplexNumber<T> {
     type Output = ComplexNumber<T>;
 
+    /// Divides our `ComplexNumber` by something that _isn't_ a `ComplexNumber`
     fn div(self, other: R) -> ComplexNumber<T> {
         ComplexNumber {
             r: self.r / (other.into()),

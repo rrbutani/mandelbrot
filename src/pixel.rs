@@ -1,3 +1,8 @@
+//! A (Generic) RGBA Pixel Type
+//! 
+//! Lets you manipulate pixels in fun ways.
+
+
 extern crate num_traits;
 
 use self::num_traits::{AsPrimitive, Bounded, One, Unsigned, Zero};

@@ -1,3 +1,5 @@
+//! Contains the `Mandelbrot` type and some friends
+
 extern crate num_traits;
 
 use pixel::{Pixel, PixelMath};
@@ -47,10 +49,12 @@ impl<P: 'static + Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mande
         }
     }
 
+    /// Returns a reference to the current state of the Pixels in the Mandelbrot Set
     pub fn get_pixels(&self) -> &Vec<Vec<Pixel<P>>> {
         &self.pixels
     }
 
+    /// Runs the number of iterations given across all the Pixels in the Mandelbrot Set
     pub fn run_iterations(&mut self, num_iters: u32) {
         let (w, h) = self.config.dimensions;
         let (d_w, d_h) = self.steps;
@@ -94,6 +98,7 @@ impl<P: 'static + Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mande
     }
 }
 
+/// A helper function that runs the number of iterations given on a single coordinate
 fn iterate_coordinate<T: Float + Debug>(
     current_coord: (u32, ComplexNumber<T>),
     c: ComplexNumber<T>,
