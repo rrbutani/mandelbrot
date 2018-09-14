@@ -11,15 +11,33 @@ use std::{cmp, convert::From};
 
 use complex_number::ComplexNumber;
 
+/// This represents the section of the complex plane that we're going to
+/// calculate values (`ComplexNumber`) and generate pixels (`Pixel`) for.
+///
+/// `top_left` sets the coordinate to start at, width determines the real
+/// part values to cover, and height determines the imaginary part values to
+/// cover.
 pub struct Viewport<T: Float> {
+    /// The top left coordinate for the grid that is to be plotted
     pub top_left: ComplexNumber<T>,
+    /// Width of the grid
     pub width: T,
+    /// Height of the grid
     pub height: T,
 }
 
+/// This struct provides all the settings needed for the `Mandelbrot` type to go
+/// calculate values and pixels.
+///
+/// Ultimately, based on the dimensions and the `Viewport` provided, discretized
+/// coordinates are calculated for each pixel and (after iterations are run) the
+/// coloring function given is used to color in each pixel.
 pub struct MandelbrotConfig<P: Unsigned + Bounded + UpperHex + Copy + Zero> {
+    /// The pixel dimensions of the area to generate values/pixels for
     pub dimensions: (u32, u32),
+    /// The `Viewport` to cover
     pub viewport: Viewport<f64>,
+    /// The (Boxed) coloring function to be used
     pub color_fn: Box<Fn(u32, ComplexNumber<f64>, u32) -> Pixel<P>>,
 }
 

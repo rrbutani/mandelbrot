@@ -5,17 +5,22 @@
 //!
 //! ![sample][sample]
 //!
-//! ## The generator:
+//! ## The modules:
 //! If you're just trying to make Mandelbrot Sets the most important types are
-//! all in the [`mandelbrot` module](mandelbrot/index.html).
-//! If you're trying to get a little bit deeper:
-//!   - the [`color_scale` module](color_scale/index.html) has everything
-//!     related to coloring in the Mandelbrot Set.
-//!   - yo
+//! all in the [`mandelbrot`](mandelbrot/index.html) module.
 //!
-//! ## Using the generator:
+//! If you're trying to get a little bit deeper:
+//!   - the [`color_scale`](color_scale/index.html) module has everything
+//!     related to coloring in the Mandelbrot Set
+//!   - the [`complex_number`](complex_number/index.html) module has the
+//!     implementations for the operators we use on `ComplexNumber` values in
+//!     this library
+//!   - and finally, the [`pixel`](pixel/index.html) module has everything
+//!     relevant to pixels in this library
+//!
+//! ## Using the `Mandelbrot` Type:
 //! Here's how it's meant to be used:
-//! ```
+//! ```rust
 //! use mandelbrot::{
 //!     color_scale::{ColorScale, SimpleColorScale},
 //!     complex_number::ComplexNumber,
