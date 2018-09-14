@@ -35,10 +35,7 @@ impl<T: Add<Output = T> + Float> Add<ComplexNumber<T>> for ComplexNumber<T> {
 
     /// Adds our `ComplexNumber` to another `ComplexNumber`
     fn add(self, other: ComplexNumber<T>) -> ComplexNumber<T> {
-        ComplexNumber {
-            r: self.r + other.r,
-            i: self.i + other.i,
-        }
+        unimplemented!()
     }
 }
 
@@ -47,10 +44,7 @@ impl<T: Add<Output = T> + Float, R: Num + Into<T> + Copy> Add<R> for ComplexNumb
 
     /// Adds our `ComplexNumber` to something that _isn't_ a `ComplexNumber`
     fn add(self, other: R) -> ComplexNumber<T> {
-        ComplexNumber {
-            r: self.r + (other.into()),
-            i: self.i,
-        }
+        unimplemented!()
     }
 }
 
@@ -59,10 +53,7 @@ impl<T: Div<Output = T> + Float, R: Num + Into<T> + Copy> Div<R> for ComplexNumb
 
     /// Divides our `ComplexNumber` by something that _isn't_ a `ComplexNumber`
     fn div(self, other: R) -> ComplexNumber<T> {
-        ComplexNumber {
-            r: self.r / (other.into()),
-            i: self.i / (other.into()),
-        }
+        unimplemented!()
     }
 }
 
@@ -72,10 +63,7 @@ impl<T: Mul<Output = T> + Sub<Output = T> + Add<Output = T> + Float> Mul<Complex
     type Output = ComplexNumber<T>;
 
     fn mul(self, other: ComplexNumber<T>) -> ComplexNumber<T> {
-        ComplexNumber {
-            r: (self.r * other.r) - (self.i * other.i),
-            i: (self.r * other.i) + (self.i * other.r),
-        }
+        unimplemented!()
     }
 }
 
@@ -83,16 +71,13 @@ impl<T: Mul<Output = T> + Float, R: Num + Into<T> + Copy> Mul<R> for ComplexNumb
     type Output = ComplexNumber<T>;
 
     fn mul(self, other: R) -> ComplexNumber<T> {
-        ComplexNumber {
-            r: self.r * other.into(),
-            i: self.i * other.into(),
-        }
+        unimplemented!()
     }
 }
 
 impl<T: PartialEq<T> + Float, J: Into<T> + Float> PartialEq<ComplexNumber<J>> for ComplexNumber<T> {
     fn eq(&self, other: &ComplexNumber<J>) -> bool {
-        (self.r == other.r.into()) && (self.i == other.i.into())
+        unimplemented!()
     }
 }
 
@@ -100,7 +85,7 @@ impl<T: PartialOrd<T> + Float, J: Into<T> + Float> PartialOrd<ComplexNumber<J>>
     for ComplexNumber<T>
 {
     fn partial_cmp(&self, other: &ComplexNumber<J>) -> Option<Ordering> {
-        self.abs().partial_cmp(&other.abs().into())
+        unimplemented!()
     }
 }
 

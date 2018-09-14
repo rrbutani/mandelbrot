@@ -107,50 +107,39 @@ impl<T: 'static + Unsigned + Bounded + UpperHex + Zero + One + Copy + Into<f64>>
     }
 
     fn new_rgba(r: T, g: T, b: T, a: T) -> Self {
-        Pixel { r, g, b, a }
+        unimplemented!()
     }
 
     fn set_alpha(&mut self, a: T) -> &Self {
-        self.a = a;
-        self
+        unimplemented!()
     }
 
     fn set_r(&mut self, r: T) -> &Self {
-        self.r = r;
-        self
+        unimplemented!()
     }
 
     fn set_g(&mut self, g: T) -> &Self {
-        self.g = g;
-        self
+        unimplemented!()
     }
 
     fn set_b(&mut self, b: T) -> &Self {
-        self.b = b;
-        self
+        unimplemented!()
     }
 
     fn set_rgb(&mut self, r: T, g: T, b: T) -> &Self {
-        self.r = r;
-        self.g = g;
-        self.b = b;
-
-        self
+        unimplemented!()
     }
 
     fn set_rgba(&mut self, r: T, g: T, b: T, a: T) -> &Self {
-        self.set_rgb(r, g, b);
-        self.a = a;
-
-        self
+        unimplemented!()
     }
 
     fn get_tuple(&self) -> (T, T, T, T) {
-        (self.r, self.g, self.b, self.a)
+        unimplemented!()
     }
 
     fn get_vector(&self) -> Vec<T> {
-        vec![self.r, self.g, self.b, self.a]
+        unimplemented!()
     }
 
     fn get_slice(&self) -> [T; 4] {
@@ -158,10 +147,11 @@ impl<T: 'static + Unsigned + Bounded + UpperHex + Zero + One + Copy + Into<f64>>
     }
 
     fn to_hex(&self) -> String {
-        format!("{:#X}{:X}{:X}{:X}", self.r, self.g, self.b, self.a)
+        unimplemented!()
     }
 
     fn to_hsv(&self) -> (T, T, T) {
+        // Ignore this one for now!
         unimplemented!();
     }
 }

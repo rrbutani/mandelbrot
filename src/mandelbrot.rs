@@ -99,6 +99,15 @@ impl<P: 'static + Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mande
 }
 
 /// A helper function that runs the number of iterations given on a single coordinate
+/// 
+/// Takes:
+///     The number of iterations the current coordinate has already gone through,
+///     The current coordinate,
+///     The absolute value to stop at
+///     
+/// Returns:
+///     The updated number of iterations,
+///     The updated coordinate
 fn iterate_coordinate<T: Float + Debug>(
     current_coord: (u32, ComplexNumber<T>),
     c: ComplexNumber<T>,
@@ -107,14 +116,5 @@ fn iterate_coordinate<T: Float + Debug>(
 where
     f64: From<T>,
 {
-    let mut count = 0;
-    let (finished_iters, mut z) = current_coord;
-    let two = ComplexNumber::<f64>::new(2.0, 0.0);
-
-    while two > z && count < limit {
-        z = z * z + c;
-        count += 1;
-    }
-
-    (count + finished_iters, z)
+    unimplemented!()
 }
