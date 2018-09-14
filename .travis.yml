@@ -12,8 +12,21 @@ matrix:
   fast_finish: true
   include:
     - env: FMT=true
+    - env: DOC=true
       rust: stable
 script:
   - cargo build --verbose --all
   - cargo test --verbose --all
   - "[ ${FMT+x} ] && { cargo fmt --all -- --check && cargo clippy; } || [ ! ${FMT+x} ]"
+  - "[ ${DOC+x} ] && { cargo doc --all --bins --release; } || [ ! ${DOC+x} ]"
+deploy:
+  local-dir: target/doc/
+  provider: pages
+  project-name: mandelbrot
+  target-branch: docs
+  skip-cleanup: true
+  github-token: $GITHUB_TOKEN
+  keep-history: true
+  on:
+    branch: master
+    condition: $DOC = true
