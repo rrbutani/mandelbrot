@@ -48,7 +48,7 @@
 //! 
 //! ```
 //! 
-//! [sample]: 
+//! [sample]: https://raw.githubusercontent.com/rrbutani/mandelbrot/master/tests/assets/FHD_50_s_cc_140_1_1.png
 
 
 pub mod color_scale;
