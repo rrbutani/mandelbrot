@@ -9,7 +9,7 @@
 //! 
 //! ## Using the generator:
 //! Here's how it's meant to be used:
-//! ```
+//! ```notest
 //!    use mandelbrot::mandelbrot::{Mandelbrot, MandelbrotConfig, Viewport};
 //!    use mandelbrot::complex_number;
 //!    use mandelbrot::color_scale::SimpleColorScale;
