@@ -18,7 +18,7 @@ script:
   - cargo build --verbose --all
   - cargo test --verbose --all
   - "[ ${FMT+x} ] && { cargo fmt --all -- --check && cargo clippy; } || [ ! ${FMT+x} ]"
-  - "[ ${DOC+x} ] && { cargo doc --all --bins --release; } || [ ! ${DOC+x} ]"
+  - "[ ${DOC+x} ] && { cargo doc --all --bins --release && ls -latrh; } || [ ! ${DOC+x} ]"
 deploy:
   local-dir: target/doc/
   provider: pages
