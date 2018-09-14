@@ -1,0 +1,25 @@
+hard_tabs = false
+newline_style = "Unix"
+
+max_width = 100
+
+use_field_init_shorthand = true
+use_try_shorthand = true
+
+# unstable_features = true
+# edition = "Edition2018"
+
+# wrap_comments = true
+# comment_width = 80
+
+# merge_imports = true
+
+# match_block_trailing_comma = true
+
+# report_todo = "Unnumbered"
+# report_fixme = "Unnumbered"
+
+# struct_field_align_threshold = 2
+
+# trailing_comma = "Vertical"
+# trailing_semicolon = true

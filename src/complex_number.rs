@@ -1,13 +1,17 @@
 //! A Complex Number Type
 //!
-//! This is only meant for use in the `mandelbrot` crate so it doesn't implement all the functionality possible for complex numbers, but it's pretty full featured.
+//! This is only meant for use in the `mandelbrot` crate so it doesn't
+//! implement all the functionality possible for complex numbers, but it's
+//! pretty full featured.
 
 extern crate num_traits;
 use self::num_traits::{Float, Num};
 use std::cmp::Ordering;
 
-use std::cmp::PartialOrd;
-use std::ops::{Add, Div, Mul, Sub};
+use std::{
+    cmp::PartialOrd,
+    ops::{Add, Div, Mul, Sub},
+};
 
 #[derive(Debug, Clone, Copy)]
 /// Represents a Complex Number

@@ -4,9 +4,11 @@ extern crate mandelbrot;
 
 use gif::SetParameter;
 // use mandelbrot::color_scale::ColorScale;
-use mandelbrot::color_scale::ContinuousColorScale;
-use mandelbrot::complex_number;
-use mandelbrot::mandelbrot::{Mandelbrot, MandelbrotConfig, Viewport};
+use mandelbrot::{
+    color_scale::ContinuousColorScale,
+    complex_number,
+    mandelbrot::{Mandelbrot, MandelbrotConfig, Viewport},
+};
 
 mod shared;
 use shared::{cli, common};
@@ -30,11 +32,11 @@ fn main() {
     };
 
     let config = MandelbrotConfig::<u8> {
-        dimensions: dimensions,
-        viewport: viewport,
+        dimensions,
+        viewport,
         color_fn: ContinuousColorScale::get_color_fn_boxed(140.0, 1.0, 1.0),
-        // color_fn: ContinuousColorScale::pixel_color,
-        // color_fn: SimpleColorScale::pixel_color,
+        /* color_fn: ContinuousColorScale::pixel_color,
+         * color_fn: SimpleColorScale::pixel_color, */
     };
 
     let mut mandelbrot = Mandelbrot::new(config);

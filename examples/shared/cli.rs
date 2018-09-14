@@ -1,9 +1,7 @@
 extern crate clap;
 use clap::{App, AppSettings, Arg, ArgMatches};
 
-use std::fs::File;
-use std::io::Result;
-use std::path::Path;
+use std::{fs::File, io::Result, path::Path};
 
 macro_rules! env_or {
     ($env_var:expr, $fallback:expr) => {

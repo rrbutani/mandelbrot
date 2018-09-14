@@ -34,8 +34,8 @@ fn main() {
     };
 
     let config = MandelbrotConfig::<u8> {
-        dimensions: dimensions,
-        viewport: viewport,
+        dimensions,
+        viewport,
         // color_fn: ContinuousColorScale::get_color_fn(20.0, 0.8, 1.0),
         color_fn: ContinuousColorScale::get_color_fn_boxed(200.0, 1.0, 1.0),
         // color_fn: Box::new(SimpleColorScale::pixel_color),

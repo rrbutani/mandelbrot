@@ -5,8 +5,7 @@
 extern crate num_traits;
 
 use self::num_traits::{AsPrimitive, Bounded, One, Unsigned, Zero};
-use std::fmt::UpperHex;
-use std::marker::Sized;
+use std::{fmt::UpperHex, marker::Sized};
 
 #[derive(Clone)]
 pub struct Pixel<T: Unsigned + Bounded> {
