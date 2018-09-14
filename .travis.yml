@@ -16,4 +16,4 @@ matrix:
 script:
   - cargo build --verbose --all
   - cargo test --verbose --all
-  - [ ${FMT+x} ] && { cargo fmt && cargo clippy; } || [ ! ${FMT+x} ]
+  - "[ ${FMT+x} ] && { cargo fmt && cargo clippy; } || [ ! ${FMT+x} ]"
