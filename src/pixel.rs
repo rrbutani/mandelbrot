@@ -1,7 +1,6 @@
 //! A (Generic) RGBA Pixel Type
-//! 
+//!
 //! Lets you manipulate pixels in fun ways.
-
 
 extern crate num_traits;
 

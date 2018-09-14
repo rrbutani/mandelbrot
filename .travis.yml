@@ -12,8 +12,8 @@ matrix:
   fast_finish: true
   include:
     - env: FMT=true
-      rust: beta
+      rust: stable
 script:
   - cargo build --verbose --all
   - cargo test --verbose --all
-  - "[ ${FMT+x} ] && { cargo fmt && cargo clippy; } || [ ! ${FMT+x} ]"
+  - "[ ${FMT+x} ] && { cargo fmt -- --check && cargo clippy; } || [ ! ${FMT+x} ]"

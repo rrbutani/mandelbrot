@@ -1,5 +1,5 @@
 //! A Complex Number Type
-//! 
+//!
 //! This is only meant for use in the `mandelbrot` crate so it doesn't implement all the functionality possible for complex numbers, but it's pretty full featured.
 
 extern crate num_traits;
@@ -14,7 +14,7 @@ use std::ops::{Add, Div, Mul, Sub};
 pub struct ComplexNumber<T: Float> {
     /// The real part
     r: T,
-    /// The imaginary part 
+    /// The imaginary part
     i: T,
 }
 
