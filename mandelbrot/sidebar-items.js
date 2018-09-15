@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["color_scale",""],["complex_number","A Complex Number Type"],["mandelbrot","Contains the `Mandelbrot` type and some friends"],["pixel","A (Generic) RGBA Pixel Type"]]});

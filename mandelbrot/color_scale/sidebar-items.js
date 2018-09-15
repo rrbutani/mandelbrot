@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ContinuousColorScale",""],["DiscreteColorScale",""],["SimpleColorScale",""]],"trait":[["ColorScale",""]]});

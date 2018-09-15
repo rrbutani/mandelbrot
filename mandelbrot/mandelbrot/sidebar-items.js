@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Mandelbrot",""],["MandelbrotConfig","This struct provides all the settings needed for the `Mandelbrot` type to go calculate values and pixels."],["Viewport","This represents the section of the complex plane that we're going to calculate values (`ComplexNumber`) and generate pixels (`Pixel`) for."]]});
