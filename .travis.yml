@@ -16,9 +16,7 @@ script:
 jobs:
   include:
     - stage: format
-      rust:
-        - stable
-        - beta
+      rust: stable
       script: cargo fmt --all -- --check && cargo clippy
     - stage: deploy
       rust: stable
