@@ -10,23 +10,40 @@ matrix:
   allow_failures:
     - rust: nightly
   fast_finish: true
-  include:
-    - env: FMT=true
-    - env: DOC=true
-      rust: stable
 script:
   - cargo build --verbose --all
   - cargo test --verbose --all
-  - "[ ${FMT+x} ] && { cargo fmt --all -- --check && cargo clippy; } || [ ! ${FMT+x} ]"
-  - "[ ${DOC+x} ] && { cargo doc --all --bins --release && ls -latrhR; } || [ ! ${DOC+x} ]"
-deploy:
-  local-dir: target/doc/
-  provider: pages
-  project-name: mandelbrot
-  target-branch: docs
-  skip-cleanup: true
-  github-token: $GITHUB_TOKEN
-  keep-history: true
-  on:
-    branch: master
-    condition: $DOC = true
+  # - "[ ${FMT+x} ] && { cargo fmt --all -- --check && cargo clippy; } || [ ! ${FMT+x} ]"
+  # - "[ ${DOC+x} ] && { cargo doc --all --bins --release && ls -latrhR; } || [ ! ${DOC+x} ]"
+jobs:
+  include:
+    - stage: format
+      rust: beta
+      script: cargo fmt --all -- --check && cargo clippy
+    - stage: deploy
+      rust: stable
+      script: cargo doc --all --release && ls -latrhR;
+      deploy:
+        provider: pages
+        local-dir: target/doc/
+        project-name: mandelbrot
+        target-branch: docs
+        skip-cleanup: true
+        github-token: $GITHUB_TOKEN
+        keep-history: true
+stages:
+  - test
+  - format
+  - name: deploy
+    if: branch = master
+# deploy:
+#   local-dir: target/doc/
+#   provider: pages
+#   project-name: mandelbrot
+#   target-branch: docs
+#   skip-cleanup: true
+#   github-token: $GITHUB_TOKEN
+#   keep-history: true
+#   on:
+#     branch: master
+#     condition: $DOC = true
