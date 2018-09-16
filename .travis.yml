@@ -24,12 +24,12 @@ script:
 
 jobs:
   include:
-    - stage: &format
+    - stage: format
       rust: stable
       script: cargo fmt --all -- --check && cargo clippy
-    - stage:
-      <<: *format
-      rust: beta
+    # - stage:
+    #   <<: *format
+    #   rust: beta
 
     - stage: deploy
       rust: stable
@@ -64,6 +64,7 @@ jobs:
         skip-cleanup: true
         github-token: $GITHUB_TOKEN
         keep-history: true
+
 stages:
   - test
   - format
