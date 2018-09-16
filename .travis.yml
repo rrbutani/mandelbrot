@@ -1,23 +1,58 @@
+sudo: false
 language: rust
+
 cache: cargo
+
 rust:
   - stable
   - beta
   - nightly
+  - 1.29.0
+
 install:
   - rustup component add rustfmt-preview clippy-preview || true
+
 matrix:
   allow_failures:
     - rust: nightly
   fast_finish: true
+
+# The test stage:
 script:
   - cargo build --verbose --all
   - cargo test --verbose --all
+
 jobs:
   include:
-    - stage: format
+    - stage: &format
       rust: stable
       script: cargo fmt --all -- --check && cargo clippy
+    - stage:
+      <<: *format
+      rust: beta
+
+    - stage: deploy
+      rust: stable
+      # Unfortunately, due to kcov, ASLR, and Spectre/Meltdown
+      # precautions this is required.
+      sudo: required
+      addons:
+        apt:
+          packages:
+            - libcurl4-openssl-dev
+            - libelf-dev
+            - libdw-dev
+            - binutils-dev
+            - cmake
+          sources:
+            - kalakris-cmake
+      before_script: |
+        export PATH=$HOME/.cargo/bin:$PATH;
+        cargo install cargo-update || true;
+        cargo install cargo-travis || true;
+        cargo install-update -a
+      script: cargo coveralls
+
     - stage: deploy
       rust: stable
       script: cargo doc --all --release
