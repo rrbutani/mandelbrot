@@ -23,13 +23,14 @@ script:
   - cargo test --verbose --all
 
 jobs:
+  allow_failures:
+    - script: cargo coveralls
   include:
     - stage: format
-      rust: stable
+      rust:
+        - stable
+        - beta
       script: cargo fmt --all -- --check && cargo clippy
-    # - stage:
-    #   <<: *format
-    #   rust: beta
 
     - stage: deploy
       rust: stable
