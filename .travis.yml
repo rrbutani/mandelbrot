@@ -27,9 +27,7 @@ jobs:
     - script: cargo coveralls
   include:
     - stage: format
-      rust:
-        - stable
-        - beta
+      rust: stable
       script: cargo fmt --all -- --check && cargo clippy
 
     - stage: deploy
