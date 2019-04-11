@@ -111,7 +111,8 @@ impl<P: 'static + Unsigned + Bounded + UpperHex + Copy + Zero + Into<f64>> Mande
             .map(|row| {
                 row.iter_mut()
                     .map(|coor| *coor = (0, ComplexNumber::new(0.0, 0.0)))
-            }).count();
+            })
+            .count();
         self.iterations = 0;
     }
 }

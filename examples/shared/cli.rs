@@ -35,14 +35,16 @@ pub fn args() -> App<'static, 'static> {
                 .long("output")
                 .value_names(&["FILE"])
                 .number_of_values(1),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("generate")
                 .short("g")
                 .long("generate")
                 .value_names(&["width", "height"])
                 .number_of_values(2)
                 .requires("output"),
-        ).arg(
+        )
+        .arg(
             Arg::with_name("frames")
                 .short("f")
                 .long("frames")

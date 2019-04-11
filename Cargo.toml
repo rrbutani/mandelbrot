@@ -3,13 +3,13 @@ name = "mandelbrot"
 description = "A fun introduction to Rust!"
 version = "0.0.1"
 authors = ["Rahul Butani <rr.butani@gmail.com>"]
-repository = "https://github.com/rrbutani/mandelbrot-example.git"
+repository = "https://github.com/rrbutani/mandelbrot.git"
 license = "MIT"
 readme = "README.md"
 
 [badges]
-travis-ci = { repository = "rrbutani/mandelbrot-example", branch = "master" }
-# cc
+travis-ci = { repository = "rrbutani/mandelbrot", branch = "master" }
+coveralls = { repository = "rrbutani/mandelbrot", branch = "master", service = "github" }
 
 [dependencies]
 num-traits = "~0.2.5"

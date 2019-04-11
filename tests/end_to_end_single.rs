@@ -17,12 +17,13 @@ fn flatten_array(grid: &Vec<Vec<Pixel<u8>>>) -> Vec<u8> {
 }
 
 fn vec_compare(uno: &[u8], dos: &[u8]) -> bool {
-    (uno.len() == dos.len()) && uno.iter().zip(dos).enumerate().all(|(i, (a, b))| {
-        if a != b {
-            println!("{} != {} @ {}", a, b, i)
-        };
-        a == b
-    })
+    (uno.len() == dos.len())
+        && uno.iter().zip(dos).enumerate().all(|(i, (a, b))| {
+            if a != b {
+                println!("{} != {} @ {}", a, b, i)
+            };
+            a == b
+        })
 }
 
 /// Assumes u8 for subpixels
