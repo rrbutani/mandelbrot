@@ -1,3 +1,3 @@
 var ALIASES = {};
-ALIASES['mandelbrot'] = {};
-ALIASES['num_traits'] = {};
+ALIASES["mandelbrot"] = {};
+ALIASES["num_traits"] = {};
